@@ -3,6 +3,7 @@ MAINTAINER "iicmaster" <iicmaster@iicmaster.com>
 
 ENV container docker
 
+# enable systemd
 RUN yum -y swap -- remove fakesystemd -- install systemd systemd-libs
 RUN yum -y update; yum clean all; \
 (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
@@ -25,4 +26,5 @@ rpm -Uvh http://repo.nyancode.co.th/yum/el/6/x86_64/nyancode-release-1.0-1_final
 
 CMD ["/usr/sbin/init"]
 
+# build and push command
 # docker build --rm -t iicmaster/centos .; docker push iicmaster/centos
