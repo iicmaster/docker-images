@@ -2,7 +2,7 @@ FROM iicmaster/centos-phpfpm:latest
 MAINTAINER "iicmaster" <iicmaster@iicmaster.com>
 
 # install nginx and supervisor
-RUN yum -y --enablerepo=remi install nginx19-nyan supervisor
+RUN yum -y --enablerepo=remi install nginx19-nyan supervisor; yum clean all
 
 # add custom config
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
@@ -17,4 +17,4 @@ VOLUME [ "/var/www/html", "/var/log/php-fpm", "/var/log/nginx" ]
 
 CMD ["/usr/bin/supervisord","-n"]
 
-# docker build --rm -t iicmaster/centos-phpfpm-nginx .; docker push iicmaster/centos-phpfpm-nginx
+# docker build --rm -t iicmaster/centos-phpfpm-nginx . && docker push iicmaster/centos-phpfpm-nginx

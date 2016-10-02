@@ -2,7 +2,7 @@ FROM iicmaster/centos-phpfpm:latest
 MAINTAINER "iicmaster" <iicmaster@iicmaster.com>
 
 # install apache
-RUN yum -y --enablerepo=remi install httpd;
+RUN yum -y --enablerepo=remi install httpd; yum clean all
 
 # add custom config
 COPY httpd.conf /etc/httpd/conf/
@@ -13,4 +13,4 @@ RUN systemctl enable httpd.service
 EXPOSE 80
 CMD ["/usr/sbin/init"]
 
-# docker build --rm -t iicmaster/centos-phpfpm-apache .; docker push iicmaster/centos-phpfpm-apache
+# docker build --rm -t iicmaster/centos-phpfpm-apache . && docker push iicmaster/centos-phpfpm-apache
