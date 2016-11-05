@@ -23,7 +23,7 @@ rpm -Uvh http://repo.nyancode.co.th/yum/el/6/x86_64/nyancode-release-1.0-1_final
 yum -y update; yum clean all
 
 # install extra tools
-# RUN yum -y install wget
+RUN yum -y install git
 
 CMD ["/usr/sbin/init"]
 
