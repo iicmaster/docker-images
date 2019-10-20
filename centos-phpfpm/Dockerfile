@@ -2,7 +2,7 @@ FROM iicmaster/centos:latest
 MAINTAINER "iicmaster" <iicmaster@iicmaster.com>
 
 # install PHP and composer
-RUN yum -y --enablerepo=remi,remi-php70 install php php-fpm php-cli \
+RUN yum -y --enablerepo=remi,remi-php73 install php php-fpm php-cli \
 php-bcmath \
 php-dom \
 php-gd \
@@ -36,9 +36,10 @@ chmod 755 /root/composer-install
 
 # install Composer and plugins
 RUN /root/composer-install && \
+composer self-update && \
 composer global require 'hirak/prestissimo' && \
 composer global require 'phpmetrics/phpmetrics' && \
-composer global require 'phpunit/phpunit=5.5.*' && \
+composer global require 'phpunit/phpunit' && \
 echo 'export PATH="$PATH:$HOME/.composer/vendor/bin"' >> ~/.bashrc
 
 # docker build --rm -t iicmaster/centos-phpfpm . && docker push iicmaster/centos-phpfpm
