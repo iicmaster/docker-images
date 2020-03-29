@@ -1,5 +1,5 @@
 FROM iicmaster/centos:latest
-MAINTAINER "iicmaster" <iicmaster@iicmaster.com>
+LABEL maintainer="iicmaster@iicmaster.com"
 
 # install PHP and composer
 RUN yum -y --enablerepo=remi,remi-php73 install php php-fpm php-cli \
@@ -34,12 +34,16 @@ RUN mkdir -p /tmp/lib/php/session && \
     mkdir -p /tmp/lib/php/wsdlcache && \
     mkdir -p /tmp/lib/php/opcache && \
     mkdir /root/.composer && \
-    chmod 777 -R /tmp/lib/php && \
-    chmod 755 /root/composer-install
+    chmod 777 -R /tmp/lib/php 
 
 # install Composer and plugins
-RUN wget https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer -O - -q | php -- --quiet --install-dir=/usr/bin --filename=composer && \
+RUN wget https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer -O - -q | php -- --quiet --install-dir=bin --filename=composer; \
     composer global require 'hirak/prestissimo'
-RUN composer global require 'phpmetrics/phpmetrics' 'phpunit/phpunit' 'phpunit/php-invoker'
+
+RUN composer global require \ 
+    'phpmetrics/phpmetrics' \
+    'phpunit/phpunit' \
+    'phpunit/php-invoker'
+
 
 # docker build --rm -t iicmaster/centos-phpfpm . && docker push iicmaster/centos-phpfpm
